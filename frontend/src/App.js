@@ -28,15 +28,15 @@ export default function App() {
       if (data.assigned_task) setRemedialTask(data.assigned_task);
     });
 
-    const handleVisibility = () => {
-      if (document.hidden) {
-        // Cheater detection (bonus): auto-fail session
-        axios.post(`${BACKEND}/daily-checkin`, { student_id: studentId, quiz_score: 0, focus_minutes: 0 });
-      }
-    };
-    document.addEventListener('visibilitychange', handleVisibility);
+    // Cheater detection disabled for testing
+    // const handleVisibility = () => {
+    //   if (document.hidden) {
+    //     axios.post(`${BACKEND}/daily-checkin`, { student_id: studentId, quiz_score: 0, focus_minutes: 0 });
+    //   }
+    // };
+    // document.addEventListener('visibilitychange', handleVisibility);
     return () => {
-      document.removeEventListener('visibilitychange', handleVisibility);
+      // document.removeEventListener('visibilitychange', handleVisibility);
       socketRef.current?.disconnect();
     };
   }, [studentId]);
