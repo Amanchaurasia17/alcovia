@@ -6,12 +6,6 @@ const { Server } = require('socket.io');
 const { pool, init } = require('./db');
 require('dotenv').config();
 
-// DEBUG: Log environment variables
-console.log('=== ENVIRONMENT CHECK ===');
-console.log('DATABASE_URL exists:', !!process.env.DATABASE_URL);
-console.log('DATABASE_URL value:', process.env.DATABASE_URL ? process.env.DATABASE_URL.substring(0, 30) + '...' : 'MISSING');
-console.log('PORT:', process.env.PORT);
-console.log('========================');
 
 const app = express();
 app.use(cors());
