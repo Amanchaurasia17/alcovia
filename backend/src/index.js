@@ -55,8 +55,8 @@ app.post('/daily-checkin', async (req, res) => {
     }
   }
 
-  io.to(`student:${student_id}`).emit('status', { status: 'Locked', intervention_id });
-  return res.json({ status: 'Pending Mentor Review', intervention_id });
+  io.to(`student:${student_id}`).emit('status', { status: 'Needs Intervention', intervention_id });
+  return res.json({ status: 'Needs Intervention', intervention_id });
 });
 
 app.post('/assign-intervention', async (req, res) => {

@@ -68,11 +68,11 @@ export default function App() {
         </View>
       )}
 
-      {status === 'Needs Intervention' || status === 'Locked' ? (
+      {status === 'Needs Intervention' && (
         <View>
           <Text>Analysis in progress. Waiting for Mentor...</Text>
         </View>
-      ) : null}
+      )}
 
       {status === 'Remedial' && remedialTask && (
         <View>
