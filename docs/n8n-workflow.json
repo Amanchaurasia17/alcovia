@@ -1,0 +1,85 @@
+{
+  "name": "Mentor Dispatcher - Alcovia",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "mentor-dispatch",
+        "httpMethod": "POST"
+      },
+      "name": "Webhook Receive",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "from": "noreply@alcovia.local",
+        "to": "<<MENTOR_EMAIL>>",
+        "subject": "Student needs intervention: {{$json[\"student_id\"]}}",
+        "text": "Student {{$json[\"student_id\"]}} failed checkin. Score: {{$json[\"quiz_score\"]}}, Focus: {{$json[\"focus_minutes\"]}}\n\nClick to assign remedial task:\n{{ $env.N8N_BASE_URL }}/webhook/mentor-approve?intervention_id={{$json[\"intervention_id\"]}}"
+      },
+      "name": "Send Email",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 1,
+      "position": [500, 300]
+    },
+    {
+      "parameters": {
+        "path": "mentor-approve",
+        "httpMethod": "GET"
+      },
+      "name": "Webhook Approve (Wait)",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [750, 300]
+    },
+    {
+      "parameters": {
+        "url": "={{$env.BACKEND_URL}}/assign-intervention",
+        "options": {},
+        "method": "POST",
+        "sendBody": "json",
+        "bodyParametersJson": "={\"intervention_id\": $json[\"query\"].intervention_id, \"assigned_task\": \"Read Chapter 4\", \"mentor_id\": \"mentor1\"}"
+      },
+      "name": "Assign Intervention",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [1000, 300]
+    }
+  ],
+  "connections": {
+    "Webhook Receive": {
+      "main": [
+        [
+          {
+            "node": "Send Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Email": {
+      "main": [
+        [
+          {
+            "node": "Webhook Approve (Wait)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook Approve (Wait)": {
+      "main": [
+        [
+          {
+            "node": "Assign Intervention",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  }
+}
