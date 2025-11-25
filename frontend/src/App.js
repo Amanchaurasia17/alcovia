@@ -3,9 +3,8 @@ import { View, Text, Button, TextInput } from 'react-native';
 import io from 'socket.io-client';
 import axios from 'axios';
 
-// Backend URL configured via Netlify environment variable
-const BACKEND = process.env.REACT_APP_BACKEND_URL || 'http://localhost:4000';
-console.log('Backend URL:', BACKEND);
+// Hardcoded backend URL for production deployment
+const BACKEND = 'https://alcovia-production-d12c.up.railway.app';
 
 export default function App() {
   const [studentId, setStudentId] = useState('student1');
