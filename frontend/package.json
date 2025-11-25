@@ -6,7 +6,7 @@
   "scripts": {
     "start": "expo start --web",
     "web": "expo start --web",
-    "build": "expo export -p web",
+    "build": "expo export",
     "serve": "serve dist -s -p $PORT"
   },
   "dependencies": {

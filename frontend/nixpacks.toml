@@ -6,7 +6,7 @@ nixPkgs = ['nodejs_18']
 cmds = ['npm install']
 
 [phases.build]
-cmds = ['npx expo export -p web']
+cmds = ['npm run build']
 
 [start]
 cmd = 'npx serve dist -s -p $PORT'
